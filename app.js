@@ -32,24 +32,24 @@ app.get('/home', async (req, res) => {
         city: "Surat",
         state: "Gujarat"
     }
-    // await redisClient.flushAll();
+    await redisClient.flushAll();
     const getCacheData = await redisClient.get(key);
     // console.log(getCacheData);
     if (!getCacheData) {
         console.log(":::::::::::: Set Cache Data ::::::::::");
         const data = await redisClient.set(key, JSON.stringify(result));
-        res.status(200).json({ data });
+        return res.status(200).json({ data });
     } else {
         console.log(":::::::::::: Get Cache Data ::::::::::");
         const data = JSON.parse(getCacheData)
-        res.status(200).json({ data });
+        return res.status(200).json({ data });
     }
 });
 app.get('/api', async (req, res) => {
     let isCached = false;
     let results;
     try {
-        await redisClient.flushAll();
+        // await redisClient.flushAll();
         let key = "covid19api";
         const cacheResults = await redisClient.get(key);
         if (cacheResults) {
