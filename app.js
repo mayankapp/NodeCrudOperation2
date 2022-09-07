@@ -32,7 +32,7 @@ app.get('/home', async (req, res) => {
         city: "Surat",
         state: "Gujarat"
     }
-    await redisClient.flushAll();
+    // await redisClient.flushAll();
     const getCacheData = await redisClient.get(key);
     // console.log(getCacheData);
     if (!getCacheData) {
